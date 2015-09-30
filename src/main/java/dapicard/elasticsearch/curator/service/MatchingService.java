@@ -63,7 +63,7 @@ public class MatchingService {
 					//means that we don't parse the time, so we go to the end of this day
 					indexDate = indexDate.plus(24 * 60 * 60 * 1000 - 1);
 				}
-				LOGGER.info("[{}] matches index name and date pattern : {}", curator.getName(), indexName);
+				LOGGER.debug("[{}] matches index name and date pattern : {}", curator.getName(), indexName);
 				DateTime maxDate = indexDate;
 				switch (action) {
 				case CLOSE:

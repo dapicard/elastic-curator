@@ -155,4 +155,18 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<distributionManagement>
+	  <repository>
+		<id>axeiya-release</id>
+		<url>http://repository.axeiya.com/content/repositories/releases/</url>
+		<name>Axeiya Releases repository</name>
+	  </repository>
+	  <snapshotRepository>
+		<id>axeiya-snapshot</id>
+		<url>http://repository.axeiya.com/content/repositories/snapshots/</url>
+		<name>Axeiya Snapshots repository</name>
+		<uniqueVersion>false</uniqueVersion>
+	  </snapshotRepository>
+    </distributionManagement>
 </project>
