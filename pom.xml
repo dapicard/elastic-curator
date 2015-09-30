@@ -96,7 +96,6 @@
 							<manifest>
 								<mainClass>dapicard.elasticsearch.curator.Curator</mainClass>
 								<addClasspath>true</addClasspath>
-								<!-- <classpathPrefix>lib/</classpathPrefix> -->
 							</manifest>
 							<manifestEntries>
 								<Class-Path>../conf/</Class-Path>

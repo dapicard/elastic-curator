@@ -19,7 +19,7 @@ public class CuratorService {
 
 	public void doCleanup() {
 		LOGGER.info("Initializing indices cleanup operations...");
-		for(String indice : transport.getOpenIndices()) {
+		for(String indice : transport.getOpenedIndices()) {
 			LOGGER.debug("For indice named {}", indice);
 			if(matchingService.toClose(indice)) {
 				LOGGER.info("Closing indice named {}", indice);

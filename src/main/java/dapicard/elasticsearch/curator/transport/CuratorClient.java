@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface CuratorClient {
 
-	Collection<String> getOpenIndices();
+	Collection<String> getOpenedIndices();
 
 	void closeIndex(String indiceName);
 

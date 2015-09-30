@@ -230,7 +230,11 @@ node.data: false
 # Disable HTTP completely:
 #
 #http.enabled: false
-http.cors.enabled: true
+#http.cors.enabled: true
+
+########################### Transport Configuration ###########################
+# Custom elastic-curator configuration to use Transport instead of Node client API
+# transport.client.initial_nodes: ["localhost:9301"]
 
 
 ################################### Gateway ###################################
@@ -319,7 +323,7 @@ http.cors.enabled: true
 #
 # 1. Disable multicast discovery (enabled by default):
 #
-discovery.zen.ping.multicast.enabled: false
+#discovery.zen.ping.multicast.enabled: false
 #
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:

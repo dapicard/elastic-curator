@@ -1,7 +1,5 @@
 package dapicard.elasticsearch.curator.transport.impl;
 
-import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -15,14 +13,12 @@ import org.elasticsearch.action.admin.indices.close.CloseIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.node.Node;
 
 import dapicard.elasticsearch.curator.transport.CuratorClient;
 
 public class CuratorNodeClient implements CuratorClient {
 	private static final Logger LOGGER = LogManager.getLogger(CuratorNodeClient.class);
 	
-	private Node node;
 	private Client client;
 	
 	private ConcurrentLinkedQueue<String> indicesToClose = new ConcurrentLinkedQueue<>();
@@ -30,13 +26,12 @@ public class CuratorNodeClient implements CuratorClient {
 	private ConcurrentLinkedQueue<String> indicesToDelete = new ConcurrentLinkedQueue<>();
 	private AtomicBoolean deleteInProgress = new AtomicBoolean(false);
 	
-	public CuratorNodeClient() {
-		node = nodeBuilder().client(true).loadConfigSettings(true).node();
-		client = node.client();
+	public CuratorNodeClient(Client client) {
+		this.client = client;
 	}
 	
 	@Override
-	public Collection<String> getOpenIndices() {
+	public Collection<String> getOpenedIndices() {
 		return Arrays.asList(client.admin().cluster().prepareState().execute().actionGet().getState().getMetaData().concreteAllOpenIndices());
 	}
 	
