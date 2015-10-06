@@ -68,7 +68,11 @@ public class Curator {
 			Runnable cleanup = new Runnable() {
 				@Override
 				public void run() {
-					curatorService.doCleanup();
+					try {
+						curatorService.doCleanup();
+					} catch (Exception e) {
+						LOGGER.error("Error while trying to cleanup", e);
+					}
 				}
 			};
 			SCHEDULER.scheduleWithFixedDelay(cleanup, config.getInitialDelayDuration().getStandardSeconds(), config.getRepeatDelayDuration().getStandardSeconds(), TimeUnit.SECONDS);
