@@ -18,8 +18,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.PeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
@@ -50,7 +48,7 @@ public class Configuration {
 	public String getInitialDelay() {
 		return initialDelay;
 	}
-	
+
 	public Duration getInitialDelayDuration() {
 		return periodFormatter.parsePeriod(initialDelay).toStandardDuration();
 	}
@@ -62,7 +60,7 @@ public class Configuration {
 	public String getRepeatDelay() {
 		return repeatDelay;
 	}
-	
+
 	public Duration getRepeatDelayDuration() {
 		return periodFormatter.parsePeriod(repeatDelay).toStandardDuration();
 	}
@@ -75,18 +73,26 @@ public class Configuration {
 		return smallestPeriod;
 	}
 
-	public static Configuration getConfiguration() throws JsonParseException, JsonMappingException, IOException {
+	public static Configuration getConfiguration() {
+		return getConfiguration(mapper.getClass().getClassLoader().getResource("curator.yml"));
+	}
+	
+	public static Configuration getConfiguration(URL confUrl) {
 		if (configuration != null) {
 			return configuration;
 		}
-		URL confUrl = mapper.getClass().getClassLoader().getResource("curator.yml");
-		LOGGER.info("Reading configuration from " + confUrl.toString());
-		configuration = mapper.readValue(confUrl.openStream(), Configuration.class);
+		
+		LOGGER.info("Reading configuration from {}", confUrl.toString());
+		try {
+			configuration = mapper.readValue(confUrl.openStream(), Configuration.class);
+		} catch (IOException ioe) {
+			throw new RuntimeException("An error occurs while reading the configuration", ioe);
+		}
 		LOGGER.debug("Configuration read successfully by Jackson");
 		ArrayList<CuratorIndex> toRemove = new ArrayList<>();
 		long now = new Date().getTime();
 		for (CuratorIndex index : configuration.getCurator()) {
-			LOGGER.info("Configuration for " + index.getName() + " : ");
+			LOGGER.info("Configuration for {} : ", index.getName());
 			Period closePeriod = periodFormatter.parsePeriod(index.getClose());
 			Period deletePeriod = periodFormatter.parsePeriod(index.getDelete());
 			index.setClosePeriod(closePeriod);
@@ -108,8 +114,8 @@ public class Configuration {
 				configuration.smallestPeriod = deletePeriod;
 			}
 
-			LOGGER.info("[" + index.getName() + "] looks for indexes named " + index.getPattern() + ". Closes " + closePeriod.toString() + "'s old indexes. Deletes "
-					+ deletePeriod.toString() + "'s old indexes.");
+			LOGGER.info("[{}] looks for indexes named {}. Closes {}'s old indexes. Deletes {}'s old indexes.", index.getName(), index.getPattern(), closePeriod.toString(),
+					deletePeriod.toString());
 			String basePattern = index.getPattern();
 			Matcher m = extractVariable.matcher(basePattern);
 			if (m.matches()) {
@@ -123,11 +129,11 @@ public class Configuration {
 				indexPattern.append(basePattern.substring(m.end(1) + 1));
 				Pattern indexP = Pattern.compile(indexPattern.toString());
 				index.setNamePattern(indexP);
-				LOGGER.info("[" + index.getName() + "] the extracted timestamp pattern is " + datePattern + " ; so the index name pattern would be " + index.getNamePattern());
+				LOGGER.info("[{}] the extracted timestamp pattern is {} ; so the index name pattern would be {}", index.getName(), datePattern, index.getNamePattern());
 			} else {
 				LOGGER
-						.error("[" + index.getName() + "] the pattern " + basePattern + " does not seem to have a timestamp variable. Add the timestamp with %{date-pattern} in the pattern.");
-				LOGGER.error("[" + index.getName() + "] this index will be ignored.");
+						.error("[{}] the pattern {} does not seem to have a timestamp variable. Add the timestamp with %{date-pattern} in the pattern.", index.getName(), basePattern);
+				LOGGER.error("[{}] this index will be ignored.", index.getName());
 				toRemove.add(index);
 			}
 		}

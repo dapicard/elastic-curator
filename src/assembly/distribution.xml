@@ -41,6 +41,7 @@
 				<include>*.sh</include>
 			</includes>
 			<filtered>true</filtered>
+			<fileMode>0755</fileMode>
 		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/daemon</directory>

@@ -1,46 +1,101 @@
 #!/bin/sh
-#
-# Init file for ElasticSearch Curator
-#
-# chkconfig: 2345 60 25
-# description: ElasticSearch Curator
 
-. /etc/rc.d/init.d/functions
+# curator.sh
+# Optionnal environment variable :
+# CURATORDIR - The base directory of es-curator should be defined before invoking this script ; else, it would be found using this script location
+# CONFDIR - The configuration directory, containing curator.yml, elasticsearch.yml and log4j2.xml. Default to $CURATORDIR/conf
+# LOGDIR - The log output files directory
 
-ESC_BASE="/opt/es-curator"
-ESC_USER="curator"
-lockfile=/var/lock/subsys/es-curator
+if [ -z "$CURATORDIR" ] ; then
+# resolve links - $0 may be a softlink
+	PRG="$0"
 
-case "$1" in
-start)
-  daemon --user=$ESC_USER java -DlogPath=/var/data/elk-work/log -jar $ESC_BASE/lib/elasticsearch-curator-1.0-SNAPSHOT.jar > /var/data/elk-work/log/curator.out 2>&1 &
-  rm -f $lockfile
-  touch $lockfile
-;;
+	while [ -h "$PRG" ]; do
+	  ls=`ls -ld "$PRG"`
+	  link=`expr "$ls" : '.*-> \(.*\)$'`
+	  if expr "$link" : '/.*' > /dev/null; then
+	    PRG="$link"
+	  else
+	    PRG=`dirname "$PRG"`/"$link"
+	  fi
+	done
+	
+	PRGDIR=`dirname "$PRG"`
+	CURATORDIR=`cd "$PRGDIR/" >/dev/null; pwd`
+fi
 
-stop)
-  rm -f $lockfile
-  ps ax -opid,cmd | grep ".*java.*elasticsearch-curator" | grep -Ev 'grep' | awk '{print $1}' | xargs --no-run-if-empty kill -9
-;;
+if [ -z "$CONFDIR" ] ; then
+	CONFDIR="$CURATORDIR/conf"
+fi
 
+if [ -z "$LOGDIR" ] ; then
+	LOGDIR="$CURATORDIR/logs"
+fi
 
-restart)
-  $0 stop
-  $0 start
-;;
-
-status)
-  gfpid=`ps ax -opid,cmd | grep ".*java.*elasticsearch-curator.*" | grep -Ev 'grep' | awk '{print $1}'`;
-  if [ -z "$gfpid" ] ; then
-      echo "Curator is NOT running. Consider to restart it."
-      exit 1
-  else
-      echo "Curator (pid $gfpid) is running"
-  fi
-;;
-
-*)
-echo "Usage: $0 {start|stop|restart|status}"
-exit 1
+# OS specific support.  $var _must_ be set to either true or false.
+cygwin=false;
+darwin=false;
+case "`uname`" in
+  CYGWIN*) cygwin=true ;;
+  Darwin*) darwin=true
+           if [ -z "$JAVA_VERSION" ] ; then
+             JAVA_VERSION="CurrentJDK"
+           else
+             echo "Using Java version: $JAVA_VERSION"
+           fi
+		   if [ -z "$JAVA_HOME" ]; then
+		      if [ -x "/usr/libexec/java_home" ]; then
+			      JAVA_HOME=`/usr/libexec/java_home`
+			  else
+			      JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/${JAVA_VERSION}/Home
+			  fi
+           fi       
+           ;;
 esac
-exit 0
+
+if [ -z "$JAVA_HOME" ] ; then
+  if [ -r /etc/gentoo-release ] ; then
+    JAVA_HOME=`java-config --jre-home`
+  fi
+fi
+
+# For Cygwin, ensure paths are in UNIX format before anything is touched
+if $cygwin ; then
+  [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
+  [ -n "$CLASSPATH" ] && CLASSPATH=`cygpath --path --unix "$CLASSPATH"`
+fi
+
+# If a specific java binary isn't specified search for the standard 'java' binary
+if [ -z "$JAVACMD" ] ; then
+  if [ -n "$JAVA_HOME"  ] ; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+      # IBM's JDK on AIX uses strange locations for the executables
+      JAVACMD="$JAVA_HOME/jre/sh/java"
+    else
+      JAVACMD="$JAVA_HOME/bin/java"
+    fi
+  else
+    JAVACMD=`which java`
+  fi
+fi
+
+if [ ! -x "$JAVACMD" ] ; then
+  echo "Error: JAVA_HOME is not defined correctly." 1>&2
+  echo "  We cannot execute $JAVACMD" 1>&2
+  exit 1
+fi
+
+# For Cygwin, switch paths to Windows format before running java
+if $cygwin; then
+  [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --path --windows "$JAVA_HOME"`
+  [ -n "$HOME" ] && HOME=`cygpath --path --windows "$HOME"`
+  [ -n "$CURATORDIR" ] && CURATORDIR=`cygpath --path --windows "$CURATORDIR"`
+fi
+
+exec "$JAVACMD" $JAVA_OPTS -Xmx512m \
+  -DlogPath="$LOGDIR" \
+  -Dcurator.configurationFile="file://$CONFDIR/curator.yml" \
+  -Dcurator.elasticsearchFile="file://$CONFDIR/elasticsearch.yml" \
+  -Dlog4j.configurationFile="file://$CONFDIR/log4j2.xml" \
+  -jar $CURATORDIR/lib/elasticsearch-curator-${project.version}.jar \
+  "$@"
