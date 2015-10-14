@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator;
+package com.github.dapicard.elasticsearch.curator;
 
 import java.util.Locale;
 

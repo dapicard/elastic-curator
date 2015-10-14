@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator.configuration;
+package com.github.dapicard.elasticsearch.curator.configuration;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator.service;
+package com.github.dapicard.elasticsearch.curator.service;
 
 import java.io.IOException;
 
@@ -11,10 +11,9 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
-import dapicard.elasticsearch.curator.TestUtil;
-import dapicard.elasticsearch.curator.configuration.Configuration;
-import dapicard.elasticsearch.curator.service.MatchingService;
+import com.github.dapicard.elasticsearch.curator.TestUtil;
+import com.github.dapicard.elasticsearch.curator.configuration.Configuration;
+import com.github.dapicard.elasticsearch.curator.service.MatchingService;
 
 public class MatchingServiceTest {
 	private static final Logger LOGGER = LogManager.getLogger(MatchingServiceTest.class);

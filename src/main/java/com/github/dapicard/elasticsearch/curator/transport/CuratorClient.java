@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator.transport;
+package com.github.dapicard.elasticsearch.curator.transport;
 
 import java.util.Collection;
 

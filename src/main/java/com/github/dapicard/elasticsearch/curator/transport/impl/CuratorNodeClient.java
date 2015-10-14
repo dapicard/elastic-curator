@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator.transport.impl;
+package com.github.dapicard.elasticsearch.curator.transport.impl;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,7 +14,7 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.client.Client;
 
-import dapicard.elasticsearch.curator.transport.CuratorClient;
+import com.github.dapicard.elasticsearch.curator.transport.CuratorClient;
 
 public class CuratorNodeClient implements CuratorClient {
 	private static final Logger LOGGER = LogManager.getLogger(CuratorNodeClient.class);

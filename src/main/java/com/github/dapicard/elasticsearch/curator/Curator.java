@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator;
+package com.github.dapicard.elasticsearch.curator;
 
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
@@ -16,11 +16,11 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
-import dapicard.elasticsearch.curator.configuration.Configuration;
-import dapicard.elasticsearch.curator.service.CuratorService;
-import dapicard.elasticsearch.curator.service.MatchingService;
-import dapicard.elasticsearch.curator.transport.CuratorClient;
-import dapicard.elasticsearch.curator.transport.impl.CuratorNodeClient;
+import com.github.dapicard.elasticsearch.curator.configuration.Configuration;
+import com.github.dapicard.elasticsearch.curator.service.CuratorService;
+import com.github.dapicard.elasticsearch.curator.service.MatchingService;
+import com.github.dapicard.elasticsearch.curator.transport.CuratorClient;
+import com.github.dapicard.elasticsearch.curator.transport.impl.CuratorNodeClient;
 
 public class Curator {
 	private static final Logger LOGGER = LogManager.getLogger(Curator.class);

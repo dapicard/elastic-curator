@@ -1,4 +1,4 @@
-package dapicard.elasticsearch.curator.service;
+package com.github.dapicard.elasticsearch.curator.service;
 
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -7,8 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 
-import dapicard.elasticsearch.curator.configuration.Configuration;
-import dapicard.elasticsearch.curator.configuration.CuratorIndex;
+import com.github.dapicard.elasticsearch.curator.configuration.Configuration;
+import com.github.dapicard.elasticsearch.curator.configuration.CuratorIndex;
 
 public class MatchingService {
 	private static final Logger LOGGER = LogManager.getLogger(MatchingService.class);

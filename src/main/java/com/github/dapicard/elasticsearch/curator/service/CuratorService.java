@@ -1,9 +1,9 @@
-package dapicard.elasticsearch.curator.service;
+package com.github.dapicard.elasticsearch.curator.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import dapicard.elasticsearch.curator.transport.CuratorClient;
+import com.github.dapicard.elasticsearch.curator.transport.CuratorClient;
 
 public class CuratorService {
 	private static final Logger LOGGER = LogManager.getLogger(CuratorService.class);
