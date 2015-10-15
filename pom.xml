@@ -9,7 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<jdk.version>1.7</jdk.version>
 		<es.version>1.5.1</es.version>
 		<jackson.version>2.4.3</jackson.version>
@@ -154,21 +154,24 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
 	<distributionManagement>
-		<repository>
-			<id>axeiya-release</id>
-			<url>http://repository.axeiya.com/content/repositories/releases/</url>
-			<name>Axeiya Releases repository</name>
-		</repository>
 		<snapshotRepository>
-			<id>axeiya-snapshot</id>
-			<url>http://repository.axeiya.com/content/repositories/snapshots/</url>
-			<name>Axeiya Snapshots repository</name>
-			<uniqueVersion>false</uniqueVersion>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
