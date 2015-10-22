@@ -37,8 +37,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<es.version>1.5.1</es.version>
+		<es.version>1.5.2</es.version>
 		<jackson.version>2.4.3</jackson.version>
+		<classifier>es15</classifier>
 	</properties>
 
 	<dependencies>
@@ -129,6 +130,7 @@
 								<Class-Path>../conf/</Class-Path>
 							</manifestEntries>
 						</archive>
+						<!-- <classifier>${classifier}</classifier> -->
 					</configuration>
 				</plugin>
 			</plugins>
@@ -142,6 +144,7 @@
 					<descriptors>
 						<descriptor>src/assembly/distribution.xml</descriptor>
 					</descriptors>
+					<!-- <classifier>${classifier}</classifier> -->
 				</configuration>
 				<executions>
 					<execution>
@@ -213,6 +216,20 @@
 	</distributionManagement>
 
 	<profiles>
+		<profile>
+			<id>ES16</id>
+			<properties>
+				<es.version>1.6.2</es.version>
+				<classifier>es16</classifier>
+			</properties>
+		</profile>
+		<profile>
+			<id>ES17</id>
+			<properties>
+				<es.version>1.7.2</es.version>
+				<classifier>es17</classifier>
+			</properties>
+		</profile>
 		<profile>
 			<id>release</id>
 			<build>
