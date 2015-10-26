@@ -4,10 +4,10 @@
 	<groupId>com.github.dapicard.elasticsearch.curator</groupId>
 	<artifactId>elasticsearch-curator-distribution</artifactId>
 	<packaging>pom</packaging>
-	<name>elasticsearch-curator-distribution</name>
+	<name>ElasticSearch Curator - Distribution POM</name>
 	<version>1.0.0</version>
 
-	<description>Time-based indexes curator for ElasticSearch</description>
+	<description>Time-based indexes curator for ElasticSearch - Distribution POM</description>
 	<url>https://github.com/dapicard/elastic-curator</url>
 	<licenses>
 		<license>
@@ -52,7 +52,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>elasticsearch-curator-dist</finalName>
+		<finalName>elasticsearch-curator</finalName>
 
 		<plugins>
 			<plugin>
