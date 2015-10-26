@@ -4,9 +4,9 @@
 	<artifactId>elasticsearch-curator-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.13-SNAPSHOT</version>
-	<name>elasticsearch-curator-parent</name>
+	<name>ElasticSearch Curator - Parent POM</name>
 
-	<description>Time-based indexes curator for ElasticSearch</description>
+	<description>Time-based indexes curator for ElasticSearch - Parent POM</description>
 	<url>https://github.com/dapicard/elastic-curator</url>
 	<licenses>
 		<license>

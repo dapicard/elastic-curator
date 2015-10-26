@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>elasticsearch-curator</artifactId>
 	<packaging>jar</packaging>
-	<name>elasticsearch-curator</name>
+	<name>ElasticSearch Curator - Main Library</name>
 	
 	<parent>
 		<groupId>com.github.dapicard.elasticsearch.curator</groupId>
@@ -10,7 +10,7 @@
 		<version>0.0.13-SNAPSHOT</version>
 	</parent>
 
-	<description>Time-based indexes curator for ElasticSearch</description>
+	<description>Time-based indexes curator for ElasticSearch - Main library</description>
 	<url>https://github.com/dapicard/elastic-curator</url>
 	<licenses>
 		<license>
@@ -108,88 +108,4 @@
 		</pluginManagement>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>distributable</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.elasticsearch</groupId>
-					<artifactId>elasticsearch</artifactId>
-					<version>${es.run.version}</version>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-assembly-plugin</artifactId>
-						<version>2.5.1</version>
-						<configuration>
-							<descriptors>
-								<descriptor>src/assembly/distribution.xml</descriptor>
-							</descriptors>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>single</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>unpack</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>unpack</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>commons-daemon</groupId>
-											<artifactId>commons-daemon</artifactId>
-											<version>1.0.15</version>
-											<classifier>bin-windows</classifier>
-											<type>zip</type>
-											<overWrite>false</overWrite>
-											<outputDirectory>${project.build.directory}/daemon</outputDirectory>
-											<includes>**/*</includes>
-											<excludes>**/*.txt</excludes>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>ES15</id>
-			<properties>
-				<es.run.version>1.5.2</es.run.version>
-				<run.classifier>es15</run.classifier>
-			</properties>
-		</profile>
-		<profile>
-			<id>ES16</id>
-			<properties>
-				<es.run.version>1.6.2</es.run.version>
-				<run.classifier>es16</run.classifier>
-			</properties>
-		</profile>
-		<profile>
-			<id>ES17</id>
-			<properties>
-				<es.run.version>1.7.2</es.run.version>
-				<run.classifier>es17</run.classifier>
-			</properties>
-		</profile>
-	</profiles>
 </project>
