@@ -102,6 +102,12 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<classifier>${run.classifier}</classifier>
+				</configuration>
+			</plugin>
 
 		</plugins>
 
