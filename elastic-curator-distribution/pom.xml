@@ -5,7 +5,7 @@
 	<artifactId>elasticsearch-curator-distribution</artifactId>
 	<packaging>pom</packaging>
 	<name>ElasticSearch Curator - Distribution POM</name>
-	<version>${elastic-curator.version}</version>
+	<version>${elastic-curator.version}-${run.classifier}</version>
 
 	<description>Time-based indexes curator for ElasticSearch - Distribution POM</description>
 	<url>https://github.com/dapicard/elastic-curator</url>
