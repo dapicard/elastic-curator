@@ -42,6 +42,11 @@ public class Curator {
 		this(Configuration.getConfiguration(configuration), ImmutableSettings.settingsBuilder().loadFromUrl(elasticsearchConfiguration).build());
 	}
 	
+	/**
+	 * Set up a curator, given its configuration
+	 * @param config The curator configuration
+	 * @param settings The ElasticSearch configuration
+	 */
 	public Curator(Configuration config, Settings settings) {
 		
 		String[] transportInitialNodes = settings.getAsArray(TRANSPORT_SETTING);
@@ -55,13 +60,13 @@ public class Curator {
 				int port = TRANSPORT_DEFAULT_PORT;
 				LOGGER.info("Adding remote node [{}] to Transport client", initialNode);
 				String[] splitHost = initialNode.split(":", 2);
-				if (splitHost.length == 2) {
-					initialNode = splitHost[0];
-					try {
-						port = Integer.parseInt(splitHost[1]);
-					} catch (NumberFormatException nfe) {
-						LOGGER.warn("The port number [{}] is not a valid port number. Using port number {}", splitHost[1], TRANSPORT_DEFAULT_PORT);
-					}
+				initialNode = splitHost[0];
+				try {
+					port = Integer.parseInt(splitHost[1]);
+				} catch (IndexOutOfBoundsException iobe) {
+					LOGGER.info("Using port number {}", port);
+				} catch (NumberFormatException nfe) {
+					LOGGER.warn("The port number [{}] is not a valid port number. Using port number {}", splitHost[1], port);
 				}
 				((TransportClient) client).addTransportAddress(new InetSocketTransportAddress(initialNode, port));
 			}
@@ -70,6 +75,7 @@ public class Curator {
 			client = nodeBuilder().client(true).settings(settings).node().client();
 		}
 		
+		//IoC
 		MatchingService matchingService = new MatchingService(config);
 		CuratorClient transport = new CuratorNodeClient(client);
 		final CuratorService curatorService = new CuratorService(matchingService, transport);

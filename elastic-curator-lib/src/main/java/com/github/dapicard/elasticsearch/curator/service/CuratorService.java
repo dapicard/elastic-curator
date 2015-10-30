@@ -17,6 +17,9 @@ public class CuratorService {
 		this.transport = transport;
 	}
 
+	/**
+	 * Launches a cleanup accross the cluster
+	 */
 	public void doCleanup() {
 		LOGGER.info("Initializing indices cleanup operations...");
 		for(String indice : transport.getOpenedIndices()) {
