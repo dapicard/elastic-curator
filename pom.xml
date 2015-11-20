@@ -3,7 +3,7 @@
 	<groupId>com.github.dapicard.elasticsearch.curator</groupId>
 	<artifactId>elasticsearch-curator</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.11</version>
+	<version>0.0.12-SNAPSHOT</version>
 	<name>elasticsearch-curator</name>
 
 	<description>Time-based indexes curator for ElasticSearch</description>
@@ -30,7 +30,7 @@
 		<url>https://github.com/dapicard/elastic-curator.git</url>
 		<connection>scm:git:git://github.com/dapicard/elastic-curator.git</connection>
 		<developerConnection>scm:git:git@github.com:dapicard/elastic-curator.git</developerConnection>
-		<tag>elasticsearch-curator-0.0.11</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
