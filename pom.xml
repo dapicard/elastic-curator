@@ -3,7 +3,7 @@
 	<groupId>com.github.dapicard.elasticsearch.curator</groupId>
 	<artifactId>elasticsearch-curator</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.12-SNAPSHOT</version>
+	<version>1.5.0.1-SNAPSHOT</version>
 	<name>elasticsearch-curator</name>
 
 	<description>Time-based indexes curator for ElasticSearch</description>
@@ -37,7 +37,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<es.version>1.5.1</es.version>
+		<es.version>1.5.2</es.version>
 		<jackson.version>2.4.3</jackson.version>
 	</properties>
 
