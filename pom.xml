@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.dapicard.elasticsearch.curator</groupId>
 	<artifactId>elasticsearch-curator</artifactId>
@@ -38,8 +37,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jdk.version>1.7</jdk.version>
-		<jackson.version>2.4.3</jackson.version>
 		<es.version>1.5.2</es.version>
+		<jackson.version>2.4.3</jackson.version>
+		<classifier>es15</classifier>
 	</properties>
 
 	<dependencies>
@@ -47,7 +47,6 @@
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
 			<version>${es.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -131,11 +130,59 @@
 								<Class-Path>../conf/</Class-Path>
 							</manifestEntries>
 						</archive>
+						<!-- <classifier>${classifier}</classifier> -->
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/distribution.xml</descriptor>
+					</descriptors>
+					<!-- <classifier>${classifier}</classifier> -->
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>commons-daemon</groupId>
+									<artifactId>commons-daemon</artifactId>
+									<version>1.0.15</version>
+									<classifier>bin-windows</classifier>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/daemon</outputDirectory>
+									<includes>**/*</includes>
+									<excludes>**/*.txt</excludes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -170,85 +217,17 @@
 
 	<profiles>
 		<profile>
-			<id>distributable</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.elasticsearch</groupId>
-					<artifactId>elasticsearch</artifactId>
-					<version>${es.run.version}</version>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-assembly-plugin</artifactId>
-						<version>2.5.1</version>
-						<configuration>
-							<descriptors>
-								<descriptor>src/assembly/distribution.xml</descriptor>
-							</descriptors>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>single</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>unpack</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>unpack</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>commons-daemon</groupId>
-											<artifactId>commons-daemon</artifactId>
-											<version>1.0.15</version>
-											<classifier>bin-windows</classifier>
-											<type>zip</type>
-											<overWrite>false</overWrite>
-											<outputDirectory>${project.build.directory}/daemon</outputDirectory>
-											<includes>**/*</includes>
-											<excludes>**/*.txt</excludes>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>ES15</id>
-			<properties>
-				<es.run.version>1.5.2</es.run.version>
-				<run.classifier>es15</run.classifier>
-			</properties>
-		</profile>
-		<profile>
 			<id>ES16</id>
 			<properties>
-				<es.run.version>1.6.2</es.run.version>
-				<run.classifier>es16</run.classifier>
+				<es.version>1.6.2</es.version>
+				<classifier>es16</classifier>
 			</properties>
 		</profile>
 		<profile>
 			<id>ES17</id>
 			<properties>
-				<es.run.version>1.7.2</es.run.version>
-				<run.classifier>es17</run.classifier>
+				<es.version>1.7.2</es.version>
+				<classifier>es17</classifier>
 			</properties>
 		</profile>
 		<profile>
