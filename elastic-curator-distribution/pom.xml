@@ -26,13 +26,6 @@
 			<url>https://github.com/dapicard/</url>
 		</developer>
 	</developers>
-	
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<properties>
 		<elastic-curator.version>0.0.13-SNAPSHOT</elastic-curator.version>
