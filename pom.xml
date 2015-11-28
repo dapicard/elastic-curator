@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.dapicard.elasticsearch.curator</groupId>
 	<artifactId>elasticsearch-curator-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.11</version>
+	<version>0.0.11-SNAPSHOT</version>
 	<name>elasticsearch-curator-parent</name>
 
 	<description>Time-based indexes curator for ElasticSearch</description>
@@ -30,7 +31,7 @@
 		<url>https://github.com/dapicard/elastic-curator.git</url>
 		<connection>scm:git:git://github.com/dapicard/elastic-curator.git</connection>
 		<developerConnection>scm:git:git@github.com:dapicard/elastic-curator.git</developerConnection>
-		<tag>elasticsearch-curator-parent-0.0.11</tag>
+		<tag>HEAD</tag>
 	</scm>
 	
 	<distributionManagement>
