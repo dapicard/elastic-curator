@@ -29,7 +29,7 @@
 			<unpack>false</unpack>
 			<outputDirectory>lib</outputDirectory>
 			<fileMode>0755</fileMode>
-			<useProjectArtifact>false</useProjectArtifact>
+			<useProjectArtifact>true</useProjectArtifact>
 		</dependencySet>
 	</dependencySets>
 	<fileSets>
