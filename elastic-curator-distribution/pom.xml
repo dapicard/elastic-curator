@@ -6,7 +6,6 @@
 	<packaging>pom</packaging>
 	<name>ElasticSearch Curator - Distribution POM</name>
 	<version>${elastic-curator.version}</version>
-	<classifier>${run.classifier}</classifier>
 
 	<description>Time-based indexes curator for ElasticSearch - Distribution POM</description>
 	<url>https://github.com/dapicard/elastic-curator</url>
@@ -101,6 +100,13 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 
 		</plugins>
