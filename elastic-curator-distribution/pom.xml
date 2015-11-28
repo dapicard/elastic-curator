@@ -26,14 +26,14 @@
 			<url>https://github.com/dapicard/</url>
 		</developer>
 	</developers>
-
+	
 	<scm>
 		<url>https://github.com/dapicard/elastic-curator.git</url>
 		<connection>scm:git:git://github.com/dapicard/elastic-curator.git</connection>
 		<developerConnection>scm:git:git@github.com:dapicard/elastic-curator.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-
+	
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -115,29 +115,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>start-curator</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target>
-								<copy file="src/test/resources/log4j2.xml" tofile="${project.build.directory}/elasticsearch-curator-dist/conf/log4j2.xml" overwrite="true"/>
-								<copy file="src/test/resources/elasticsearch.yml" tofile="${project.build.directory}/elasticsearch-curator-dist/conf/elasticsearch.yml" overwrite="true"/>
-								<copy file="src/test/resources/curator.yml" tofile="${project.build.directory}/elasticsearch-curator-dist/conf/curator.yml" overwrite="true"/>
-								<java jar="${project.build.directory}/elasticsearch-curator-dist/lib/elasticsearch-curator-${elastic-curator.version}.jar" fork="true" timeout="30000" />
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<configuration>

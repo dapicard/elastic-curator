@@ -45,7 +45,7 @@
 
 		<jdk.version>1.7</jdk.version>
 		<jackson.version>2.4.3</jackson.version>
-		<es.version>1.6.2</es.version>
+		<es.version>1.5.2</es.version>
 	</properties>
 
 	<dependencyManagement>

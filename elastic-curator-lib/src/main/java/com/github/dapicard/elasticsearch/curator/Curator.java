@@ -72,7 +72,7 @@ public class Curator {
 			}
 		} else {
 			//Node client
-			client = nodeBuilder().settings(settings).node().client();
+			client = nodeBuilder().client(true).settings(settings).node().client();
 		}
 		
 		//IoC
