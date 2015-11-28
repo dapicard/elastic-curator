@@ -27,13 +27,6 @@
 		</developer>
 	</developers>
 	
-	<scm>
-		<url>https://github.com/dapicard/elastic-curator.git</url>
-		<connection>scm:git:git://github.com/dapicard/elastic-curator.git</connection>
-		<developerConnection>scm:git:git@github.com:dapicard/elastic-curator.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-	
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
