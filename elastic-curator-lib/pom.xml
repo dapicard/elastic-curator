@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.github.dapicard.elasticsearch.curator</groupId>
 		<artifactId>elasticsearch-curator-parent</artifactId>
-		<version>0.0.12-SNAPSHOT</version>
+		<version>0.0.11</version>
 	</parent>
 
 	<description>Time-based indexes curator for ElasticSearch</description>
