@@ -2,6 +2,8 @@ package com.github.dapicard.elasticsearch.curator;
 
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.Executors;
@@ -12,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
@@ -35,11 +36,11 @@ public class Curator {
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	
 	public Curator() {
-		this(Configuration.getConfiguration(), ImmutableSettings.settingsBuilder().loadFromClasspath("elasticsearch.yml").build());
+		this(Configuration.getConfiguration(), Settings.settingsBuilder().loadFromStream("elasticsearch.yml", Curator.class.getClassLoader().getResourceAsStream("elasticsearch.yml")).build());
 	}
 	
-	public Curator(URL configuration, URL elasticsearchConfiguration) {
-		this(Configuration.getConfiguration(configuration), ImmutableSettings.settingsBuilder().loadFromUrl(elasticsearchConfiguration).build());
+	public Curator(URL configuration, URL elasticsearchConfiguration) throws IOException {
+		this(Configuration.getConfiguration(configuration), Settings.settingsBuilder().loadFromStream(elasticsearchConfiguration.getFile(), elasticsearchConfiguration.openStream()).build());
 	}
 	
 	public Curator(Configuration config, Settings settings) {
@@ -49,7 +50,7 @@ public class Curator {
 		Client client;
 		if(transportInitialNodes != null && transportInitialNodes.length > 0) {
 			//Transport client
-			client = new TransportClient();
+			client = TransportClient.builder().build();
 			//Specific configuration
 			for(String initialNode : transportInitialNodes) {
 				int port = TRANSPORT_DEFAULT_PORT;
@@ -63,7 +64,7 @@ public class Curator {
 						LOGGER.warn("The port number [{}] is not a valid port number. Using port number {}", splitHost[1], TRANSPORT_DEFAULT_PORT);
 					}
 				}
-				((TransportClient) client).addTransportAddress(new InetSocketTransportAddress(initialNode, port));
+				((TransportClient) client).addTransportAddress(new InetSocketTransportAddress(new InetSocketAddress(initialNode, port)));
 			}
 		} else {
 			//Node client
@@ -115,9 +116,12 @@ public class Curator {
 		if(ES_CONFIGURATION_SYS != null && !ES_CONFIGURATION_SYS.trim().isEmpty()) {
 			try {
 				URL esUrl = new URL(ES_CONFIGURATION_SYS);
-				settings = ImmutableSettings.settingsBuilder().loadFromUrl(esUrl).build();
+				settings = Settings.settingsBuilder().loadFromStream(esUrl.getFile(), esUrl.openStream()).build();
 			} catch (MalformedURLException mue) {
 				LOGGER.error("Unable to find the ElasticSearch configuration file. Please provide an URL to this file.", mue);
+				System.exit(1);
+			} catch (IOException ioe) {
+				LOGGER.error("An error occurs while reading the configuration URL.", ioe);
 				System.exit(1);
 			} catch (RuntimeException re) {
 				LOGGER.error(re.getMessage(), re);
@@ -125,7 +129,7 @@ public class Curator {
 			}
 		} else {
 			try {
-				settings = ImmutableSettings.settingsBuilder().loadFromClasspath("elasticsearch.yml").build();
+				settings = Settings.settingsBuilder().loadFromStream("elasticsearch.yml", Curator.class.getClassLoader().getResourceAsStream("elasticsearch.yml")).build();
 			} catch (RuntimeException re) {
 				LOGGER.error(re.getMessage(), re);
 				System.exit(2);
