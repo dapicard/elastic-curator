@@ -5,7 +5,6 @@
 	<packaging>jar</packaging>
 	<version>1.7.0.2-SNAPSHOT</version>
 	<name>elastic-sweeper</name>
->>>>>>> 5dd39cc... Change project name to elastic-sweeper
 
 	<description>Time-based indices curator for ElasticSearch</description>
 	<url>https://github.com/dapicard/elastic-sweeper</url>
