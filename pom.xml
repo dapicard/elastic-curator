@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.dapicard.elasticsearch.curator</groupId>
-	<artifactId>elasticsearch-curator</artifactId>
+	<groupId>com.github.dapicard.elasticsearch.sweeper</groupId>
+	<artifactId>elastic-sweeper</artifactId>
 	<packaging>jar</packaging>
 	<version>1.5.0.2-SNAPSHOT</version>
-	<name>elasticsearch-curator</name>
+	<name>elastic-sweeper</name>
 
-	<description>Time-based indexes curator for ElasticSearch</description>
-	<url>https://github.com/dapicard/elastic-curator</url>
+	<description>Time-based indices curator for ElasticSearch</description>
+	<url>https://github.com/dapicard/elastic-sweeper</url>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -27,9 +27,9 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/dapicard/elastic-curator.git</url>
-		<connection>scm:git:git://github.com/dapicard/elastic-curator.git</connection>
-		<developerConnection>scm:git:git@github.com:dapicard/elastic-curator.git</developerConnection>
+		<url>https://github.com/dapicard/elastic-sweeper.git</url>
+		<connection>scm:git:git://github.com/dapicard/elastic-sweeper.git</connection>
+		<developerConnection>scm:git:git@github.com:dapicard/elastic-sweeper.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -92,7 +92,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>elasticsearch-curator</finalName>
+		<finalName>elastic-sweeper</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

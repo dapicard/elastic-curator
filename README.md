@@ -1,2 +1,2 @@
 # elastic-curator
-Time-based indexes curator for ElasticSearch
+Time-based indices curator for ElasticSearch
