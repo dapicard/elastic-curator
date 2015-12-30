@@ -42,7 +42,9 @@ public class CuratorNodeClient implements CuratorClient {
 
 	@Override
 	public void closeIndex(final String indiceName) {
-		indicesToClose.add(indiceName);
+		if(!indicesToClose.contains(indiceName)) {
+			indicesToClose.add(indiceName);
+		}
 		if (!closeInProgress.get()) {
 			doClose();
 		}
@@ -72,7 +74,9 @@ public class CuratorNodeClient implements CuratorClient {
 
 	@Override
 	public void deleteIndex(final String indiceName) {
-		indicesToDelete.add(indiceName);
+		if(!indicesToDelete.contains(indiceName)) {
+			indicesToDelete.add(indiceName);
+		}
 		if (!deleteInProgress.get()) {
 			doDelete();
 		}
