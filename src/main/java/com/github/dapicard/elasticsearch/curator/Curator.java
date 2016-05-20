@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.lang3.StringUtils;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -43,13 +44,15 @@ public class Curator {
 	}
 	
 	public Curator(Configuration config, Settings settings) {
-		
+		LOGGER.debug("Using given settings : {}", settings.toDelimitedString('|'));
 		String[] transportInitialNodes = settings.getAsArray(TRANSPORT_SETTING);
-		
+		LOGGER.debug("Transport client initial nodes : {}", StringUtils.join(transportInitialNodes).toString());
 		Client client;
 		if(transportInitialNodes != null && transportInitialNodes.length > 0) {
 			//Transport client
-			client = new TransportClient();
+			Settings s = ImmutableSettings.settingsBuilder().put("cluster.name", settings.get("cluster.name")).build();
+			LOGGER.info("Instantiating Transport Client using settings {}", s.toString());
+			client = new TransportClient(s);
 			//Specific configuration
 			for(String initialNode : transportInitialNodes) {
 				int port = TRANSPORT_DEFAULT_PORT;
