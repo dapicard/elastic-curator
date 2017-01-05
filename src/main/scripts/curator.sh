@@ -95,7 +95,7 @@ fi
 exec "$JAVACMD" $JAVA_OPTS -Xmx512m \
   -DlogPath="$LOGDIR" \
   -Dcurator.configurationFile="file://$CONFDIR/curator.yml" \
-  -Dcurator.elasticsearchFile="file://$CONFDIR/elasticsearch.yml" \
+  -Delasticsearch.configurationFile="file://$CONFDIR/elasticsearch.yml" \
   -Dlog4j.configurationFile="file://$CONFDIR/log4j2.xml" \
-  -jar $CURATORDIR/lib/elasticsearch-curator-${project.version}.jar \
+  -jar $CURATORDIR/lib/${project.build.finalName}-${project.version}.jar \
   "$@"
